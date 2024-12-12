@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --green : rgb(44, 249, 58);
+}
+
+body{
+    background-color: burlywood;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+h2, p{
+    text-align: center;
+    margin-bottom: 10px;
+}
+h2{
+    color:rgb(4, 164, 15)
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#gameBord{
+    border: 1px solid rgb(26, 25, 25);
+}
+
+#score{
+    margin: 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+#scoreVal{
+    color: red;
+}
+
+.arrows{
+    display: grid;
+    grid-template-areas: 
+    "U U U"
+    "L P R"
+    "D D D"
+    ;
+    justify-content: center;
+    width: 100%;
+    gap: 5px;
+}
+.arrows > div{
+    width: fit-content;
+    margin: auto;
+    background-color: #1f1e1efe;
+    padding: 8px ;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.arrows img{
+    width: 30px;
+}
+.up{
+    grid-area: U;
+}
+.down{
+    grid-area: D;
+}
+.left{
+    grid-area: L;
+}
+.pause{
+    grid-area: P;
+}
+.right{
+    grid-area: R;
+}
