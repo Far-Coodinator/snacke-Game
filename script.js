@@ -14,7 +14,8 @@ const scoreValue = document.getElementById('scoreVal');
 // to get gameboard width and heigth 
 const Width = gameBord.width;
 const Heigth = gameBord.height;
-const UNIT = 20;
+const UNIT = 10;
+const BigUNIT = 20
 let foodx;
 let foody;
 let snake =[
@@ -26,7 +27,12 @@ let snake =[
 ]
 let xvel = UNIT
 let yvel = 0
-
+let score = 0
+let scorePerFood = 5
+let bigFoodCount = 0;
+let xBigFood;
+let yBigFood;
+let snakeFast = 200
 
 
 
@@ -60,11 +66,6 @@ function drawSnake(){
         context.strokeRect(snakePart.x,snakePart.y,UNIT,UNIT)
     })
 }
-function moveSnake(){
-    const frontBox = {x:snake[0].x+xvel,y:snake[0].y+yvel}
-    snake.push()
-    console.log(frontBox)
-}
 
 function moveSnake(){
     const headBox = {x:snake[0].x+xvel,y:snake[0].y+yvel}
@@ -85,16 +86,19 @@ function fastSnakeMover(){
     moveSnake();
     clearBoard();
     drawSnake();
+    growSnake();
+    if(bigFoodCount>=3)
+        displayBigFood()
     fastSnakeMover()
-    growSnake()
-    },300)
+
+    },snakeFast)
+    
 }
 
 const getArrow = document.querySelectorAll(".arrows .btn");
 getArrow.forEach(arrow=>{
     arrow.addEventListener('click',()=>{
         const clickedArrow = arrow.getAttribute('data-active');
-        console.log( foodx + " " + snake[0].x + 'and'  + foody + " " + snake[0].y)
         changeDirection(clickedArrow)
     });
 });
@@ -125,9 +129,63 @@ function growSnake(){
         const xgrowed = snake[0].x+xvel;
         const ygrowed = snake[0].y+yvel;
         snake.unshift({x:xgrowed,y:ygrowed}) 
+        score += scorePerFood
+        showScore()
         createFood()
         displayFood()
+        bigFoodCount += 1
+        createBigFood()
     }
 }
-console.log( foodx + " " + snake[0].x + '  and  '  + foody + " " + snake[0].y)
 
+function createBigFood(){
+    if(bigFoodCount >= 3){
+        xBigFood = Math.floor(Math.random() * Width / UNIT) * UNIT
+        yBigFood = Math.floor(Math.random() * Heigth / UNIT) * UNIT
+    }
+}
+
+function displayBigFood(){
+    context.fillStyle = 'red'
+    context.fillRect(xBigFood,yBigFood,BigUNIT,BigUNIT)
+    ateSnakeBigFood()
+}
+
+function showScore(){
+    document.querySelector('#scoreVal').innerHTML = score
+    increseFast()
+}
+
+function ateSnakeBigFood(){
+    if((snake[0].x==xBigFood && snake[0].y==yBigFood) || (snake[0].x==xBigFood && snake[0].y==yBigFood+UNIT) || (snake[0].x==xBigFood+UNIT && snake[0].y==yBigFood) ||(snake[0].x==xBigFood+UNIT && snake[0].y==yBigFood+UNIT)){
+        score += (scorePerFood*2)
+        showScore()
+        bigFoodCount = 0
+        clearBigFood()
+    }
+}
+
+function clearBigFood(){
+    context.clearRect(xBigFood,yBigFood,BigUNIT,BigUNIT)
+}
+
+function increseFast(){
+    switch(true){
+        case(score>=30 && score<50):
+            snakeFast = 180;
+            break;
+        case(score>=50 && score<100):
+            snakeFast = 150;
+            break;
+        case(score>=100 && score<130):
+            snakeFast = 120;
+            break;
+        case(score>=130 && 170):
+            snakeFast = 100;
+            break;
+        case(score>=170 && 210):
+            snakeFast = 80;
+            break;
+    }
+    console.log(snakeFast)
+}
