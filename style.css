@@ -89,6 +89,9 @@ h2, p{
 .right{
     grid-area: R;
 }
+.play{
+    display:none;
+}
 
 .game-over{
     position: absolute;
