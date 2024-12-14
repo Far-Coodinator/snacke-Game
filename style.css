@@ -89,7 +89,7 @@ h2, p{
 .right{
     grid-area: R;
 }
-.play{
+.arrows .play{
     display:none;
 }
 
