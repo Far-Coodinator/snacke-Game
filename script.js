@@ -37,6 +37,7 @@ let bigFoodCount = 0;
 let xBigFood;
 let yBigFood;
 let snakeFast = 200
+let snakeActuleFast = snakeFast
 let bigFoodCreated = false
 
 
@@ -99,7 +100,7 @@ function fastSnakeMover(){
         displayBigFood()
     fastSnakeMover()
 
-    },snakeFast)
+    },snakeActuleFast)
     
 }
 
@@ -253,3 +254,10 @@ document.querySelector('button').addEventListener('click',()=>{
         
 
 });
+
+document.querySelector('.arrows .pause').addEventListener('click',()=>{
+    snakeActuleFast = 5000
+    setTimeout(()=>{
+        snakeActuleFast = snakeFast
+    })
+})
