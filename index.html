@@ -8,11 +8,27 @@
     <title>Snake Game</title>
 </head>
 <body>
-    <h2>Snake Game</h2>
-    <p class="img">Press the space to pause or continue</p>
+    <h2 class="heading">Snake Game</h2>
+    <div class="score-box">
+        <p>Best Player: <span id="best-player"></span> (<span id="high-score"></span>) </p>
+        <p>Current Score:<span id="scoreVal">00</span></p>
+    </div>
+    
     <div id="container">
         <canvas id="gameBord" width="340" height="400" style="background-color: #212121;"></canvas>
-        <div id="score">Score: <span id="scoreVal">0</span></div>
+        <div class="game-over" id="game-over">
+            <h2>Game Over</h2>
+            <p><span id="final-result"></span> <span id="final-score"></span></p>
+            <div class="registerForm">
+                <label for="Your-name">Your name</label>
+                <input type="text" id="Your-name">
+                <p class="error">Please enter your name</p>
+                <button>Enter</button>
+            </div>
+        </div>
+        <div class="start_gam">
+            <button>START</button>
+        </div>
     </div>
     <div class="arrows">
         <div class="up btn" data-active="up"><img src="arrows/up-arrow (1).png" alt=""></div>
