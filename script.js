@@ -242,6 +242,10 @@ function ShowBestScore(name,highScore){
 function showRegisterForm(){
     document.querySelector('.registerForm').style.display = 'flex'
 }
+// function changePlayIcon(){
+//     let img = document.querySelector('.arrows .play')
+//     img.src = 
+// }
 
 document.querySelector('button').addEventListener('click',()=>{
     let playerName = document.querySelector('.registerForm input').value
@@ -254,10 +258,17 @@ document.querySelector('button').addEventListener('click',()=>{
         
 
 });
+const pausebtn = document.querySelector('.arrows .pause')
+const playbtn = document.querySelector('.arrows .play')
+pausebtn.addEventListener('click',()=>{
+    pausebtn.style.display = 'none'
+    playbtn.style.display = 'inline'
+    snakeActuleFast = 1000000
+})
 
-document.querySelector('.arrows .pause').addEventListener('click',()=>{
-    snakeActuleFast = 5000
-    setTimeout(()=>{
-        snakeActuleFast = snakeFast
-    })
+playbtn.addEventListener('click',()=>{
+    playbtn.style.display = 'none'
+    pausebtn.style.display = 'inline'
+    snakeActuleFast = snakeFast
+    fastSnakeMover()
 })
