@@ -139,6 +139,7 @@ function growSnake(){
         const ygrowed = snake[0].y+yvel;
         snake.unshift({x:xgrowed,y:ygrowed}) 
         score += scorePerFood
+        eatFoodSound()
         showScore()
         createFood()
         displayFood()
@@ -207,6 +208,9 @@ function gameOver(){
     let xheadOfSnake = snake[0].x
     let yheadOfSnake = snake[0].y
     if((xheadOfSnake>=Width || xheadOfSnake<0) || (yheadOfSnake>=Heigth || yheadOfSnake<0)){
+        soundEffectGameOver()
+        snakeActuleFast = 1000000
+        fastSnakeMover()
         const finalresult = document.querySelector('#game-over')
         finalresult.style.display = 'flex'
         document.querySelector('#final-score').innerHTML = addZeroInScore(score)
@@ -272,3 +276,13 @@ playbtn.addEventListener('click',()=>{
     snakeActuleFast = snakeFast
     fastSnakeMover()
 })
+const eatSound = new Audio('./sounds/mixkit-bonus-earned-in-video-game-2058.wav')
+function eatFoodSound(){
+    eatSound.currentTime = 0.09
+    eatSound.play()
+}
+
+function soundEffectGameOver(){
+    const gameOverSound = new Audio('./sounds/mixkit-casino-bling-achievement-2067.wav')
+    gameOverSound.play()
+}
