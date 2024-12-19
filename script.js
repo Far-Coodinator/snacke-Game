@@ -41,6 +41,7 @@ let snakeActuleFast = snakeFast
 let bigFoodCreated = false
 
 
+
 const start = document.querySelector('.start_gam button')
 start.addEventListener('click',()=>{
     startGame()
@@ -52,8 +53,6 @@ function startGame(){
     context.fillRect(0,0, Width, Heigth); //N02
     createFood(); // we will difend here random food combination
     fastSnakeMover()
-    
-
 }
 
 function createFood(){
@@ -65,6 +64,7 @@ function displayFood(){
     context.fillStyle = 'red';
     context.fillRect(foodx, foody, UNIT,UNIT);
 }
+
 
 function drawSnake(){
     context.fillStyle = 'aqua';
@@ -96,10 +96,9 @@ function fastSnakeMover(){
     clearBoard();
     drawSnake();
     growSnake();
-    if(bigFoodCount>=3)
-        displayBigFood()
-    fastSnakeMover()
-
+    displayBigFood();
+    ateSnakeBigFood();
+    fastSnakeMover();
     },snakeActuleFast)
     
 }
@@ -111,6 +110,7 @@ getArrow.forEach(arrow=>{
         changeDirection(clickedArrow)
     });
 });
+
 
 function changeDirection(direction){
     switch (true) {
@@ -133,6 +133,7 @@ function changeDirection(direction){
     }
 }
 
+
 function growSnake(){
     if(foodx == snake[0].x && foody == snake[0].y){
         const xgrowed = snake[0].x+xvel;
@@ -142,27 +143,23 @@ function growSnake(){
         eatFoodSound()
         showScore()
         createFood()
-        displayFood()
         bigFoodCount += 1
-        if(!bigFoodCreated){
-            createBigFood()
+        if(!bigFoodCreated && bigFoodCount >= 2){
             bigFoodCreated = true
+            createBigFood()
         }
-            
+        console.log(bigFoodCount)     
     }
 }
-
 function createBigFood(){
-    if(bigFoodCount >= 3){
         xBigFood = Math.floor(Math.random() * Width / UNIT) * UNIT
         yBigFood = Math.floor(Math.random() * Heigth / UNIT) * UNIT
-    }
 }
+
 
 function displayBigFood(){
     context.fillStyle = 'red'
     context.fillRect(xBigFood,yBigFood,BigUNIT,BigUNIT)
-    ateSnakeBigFood()
 }
 
 function showScore(){
@@ -173,15 +170,18 @@ function showScore(){
 function ateSnakeBigFood(){
     if((snake[0].x==xBigFood && snake[0].y==yBigFood) || (snake[0].x==xBigFood && snake[0].y==yBigFood+UNIT) || (snake[0].x==xBigFood+UNIT && snake[0].y==yBigFood) ||(snake[0].x==xBigFood+UNIT && snake[0].y==yBigFood+UNIT)){
         score += (scorePerFood*2)
-        showScore()
         bigFoodCount = 0
-        clearBigFood()
         bigFoodCreated = false
+        eatFoodSound()
+        showScore()
+        clearBigFood()
     }
 }
 
 function clearBigFood(){
     context.clearRect(xBigFood,yBigFood,BigUNIT,BigUNIT)
+    xBigFood = undefined
+    yBigFood = undefined
 }
 
 function increseFast(){
@@ -209,6 +209,7 @@ function gameOver(){
     let yheadOfSnake = snake[0].y
     if((xheadOfSnake>=Width || xheadOfSnake<0) || (yheadOfSnake>=Heigth || yheadOfSnake<0)){
         soundEffectGameOver()
+        vibration()
         snakeActuleFast = 1000000
         fastSnakeMover()
         const finalresult = document.querySelector('#game-over')
@@ -270,6 +271,7 @@ pausebtn.addEventListener('click',()=>{
     snakeActuleFast = 1000000
 })
 
+
 playbtn.addEventListener('click',()=>{
     playbtn.style.display = 'none'
     pausebtn.style.display = 'inline'
@@ -285,4 +287,14 @@ function eatFoodSound(){
 function soundEffectGameOver(){
     const gameOverSound = new Audio('./sounds/mixkit-casino-bling-achievement-2067.wav')
     gameOverSound.play()
+}
+
+function vibration(){
+    if ("vibrate" in navigator) {
+        // Vibrate pattern: 500ms on, 300ms off, 500ms on
+        navigator.vibrate([500, 300, 500]);
+        console.log("Vibrating the phone!");
+      } else {
+        console.log("Vibration API not supported on this device.");
+      }
 }
