@@ -144,7 +144,7 @@ function growSnake(){
         showScore()
         createFood()
         bigFoodCount += 1
-        if(!bigFoodCreated && bigFoodCount >= 2){
+        if(!bigFoodCreated && bigFoodCount >= 3){
             bigFoodCreated = true
             createBigFood()
         }
